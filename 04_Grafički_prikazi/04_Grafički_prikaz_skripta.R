@@ -29,69 +29,6 @@ View(penguins)
 
 ###############################################################################
 
-# Različiti načini grafičkih prikaza - base R vs. ggplot2
-
-# Primjer 1: Histogram
-# Base R histogram
-hist(penguins$body_mass_g,
-     main = "Distribucija mase tijela pingvina (Base R)",
-     xlab = "Masa tijela (g)",
-     col = "lightblue",
-     border = "black")
-
-# ggplot2 histogram
-ggplot(penguins, aes(x = body_mass_g)) +
-  geom_histogram(binwidth = 500, fill = "lightblue", color = "black") +
-  labs(title = "Distribucija mase tijela pingvina (ggplot2)", 
-       x = "Masa tijela (g)")
-
-# Odaberite jednu numeričku varijablu i za nju napravite histogram na oba načina!
-
-# Primjer 2: Stupičasti dijagram (bar plot)
-
-# Prvo: Kreiranje tablice za broj pingvina po vrsti
-species_count <- table(penguins$species)
-print(species_count)
-
-# Base R barplot
-barplot(species_count,
-        main = "Distribucija pingvina po vrsti (Base R)",
-        xlab = "Vrsta",
-        ylab = "Broj pingvina",
-        col = "darkorange")
-
-# Koju grešku uočavate na prikazu ovog grafa? 
-# Probajte naći rješenje na iternetu kako to ispraviti!
-
-# ggplot2 barplot
-ggplot(penguins, aes(x = species)) +
-  geom_bar(fill = "darkorange") +
-  labs(title = "Distribucija pingvina po vrsti (ggplot2)", 
-       x = "Vrsta", 
-       y = "Broj pingvina")
-
-# Napravite barplot distribucije pingvina po otocima! Odaberite drugu boju!
-# Pazite da izmjenite nazive na osima! 
-
-# Primjer 3: Točkast dijagram (scatter plot)
-# Base R scatter plot
-plot(penguins$bill_length_mm, penguins$bill_depth_mm,
-     main = "Odnos dužine i dubine kljuna (Base R)",
-     xlab = "Dužina kljuna (mm)",
-     ylab = "Dubina kljuna (mm)",
-     col = "darkgreen", pch = 19)
-
-# ggplot2 scatter plot
-ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point(color = "darkgreen", size = 2) +
-  labs(title = "Odnos dužine i dubine kljuna (ggplot2)", 
-       x = "Dužina kljuna (mm)", 
-       y = "Dubina kljuna (mm)")
-
-# Odaberite 2 nove varijable i pokažite ih pomoću scatter plota!
-
-###############################################################################
-
 # ggplot2 paket - slojevi i estetika
 
 # 1. Osnovni graf bez slojeva
@@ -145,7 +82,68 @@ ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = speci
 # Prisjetite se gradive prošle vježbe - manipulacija tablicom i napravite 3 grafa po uzoru na gornji:
 # svaki graf neka pokazuje odnos duljine i dubine kljuna za 1 vrstu!
 
+
 ###############################################################################
+
+# Različiti načini grafičkih prikaza - base R vs. ggplot2
+
+# Primjer 1: Histogram
+# Base R histogram
+hist(penguins$body_mass_g,
+     main = "Distribucija mase tijela pingvina (Base R)",
+     xlab = "Masa tijela (g)",
+     col = "lightblue",
+     border = "black")
+
+# Koju grešku uočavate na prikazu ovog grafa? 
+# Probajte naći rješenje na iternetu kako to ispraviti!
+
+# ggplot2 histogram
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 500, fill = "lightblue", color = "black") +
+  labs(title = "Distribucija mase tijela pingvina (ggplot2)", 
+       x = "Masa tijela (g)")
+
+# Primjer 2: Stupičasti dijagram (bar plot)
+
+# Prvo: Kreiranje tablice za broj pingvina po vrsti
+species_count <- table(penguins$species)
+print(species_count)
+
+# Base R barplot
+barplot(species_count,
+        main = "Distribucija pingvina po vrsti (Base R)",
+        xlab = "Vrsta",
+        ylab = "Broj pingvina",
+        col = "darkorange")
+
+
+# ggplot2 barplot
+ggplot(penguins, aes(x = species)) +
+  geom_bar(fill = "darkorange") +
+  labs(title = "Distribucija pingvina po vrsti (ggplot2)", 
+       x = "Vrsta", 
+       y = "Broj pingvina")
+
+
+# Primjer 3: Točkast dijagram (scatter plot)
+# Base R scatter plot
+plot(penguins$bill_length_mm, penguins$bill_depth_mm,
+     main = "Odnos dužine i dubine kljuna (Base R)",
+     xlab = "Dužina kljuna (mm)",
+     ylab = "Dubina kljuna (mm)",
+     col = "darkgreen", pch = 19)
+
+# ggplot2 scatter plot
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(color = "darkgreen", size = 2) +
+  labs(title = "Odnos dužine i dubine kljuna (ggplot2)", 
+       x = "Dužina kljuna (mm)", 
+       y = "Dubina kljuna (mm)")
+
+
+###############################################################################
+
 
 # Grafički prikazi po tipu varijabli
 
@@ -153,7 +151,6 @@ ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = speci
 # 1.1 Tablica frekvencija za prikaz broja pingvina po vrstama.
 table(penguins$species)
 
-# Spremite ovu tablicu kao CSV dokument!
 
 # 1.2 Barplot za prikaz distribucije pingvina po vrstama.
 
@@ -189,11 +186,6 @@ ggplot(penguins, aes(x = body_mass_g)) +
 
 # Napravite histogram za još jednu numeričku varijablu!
 # Koja opcija binwidth je najbolja za tu varijablu?
-
-# 2.2 Tablica deskriptive statistike za numeričku varijablu mase.
-summary(penguins$body_mass_g)
-
-# Spremite ovu tablicu kao CSV!
 
 
 # 3. Prikaz odnosa između dvije kategoričke varijable
