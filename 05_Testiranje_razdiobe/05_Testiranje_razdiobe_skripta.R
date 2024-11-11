@@ -19,7 +19,6 @@ install.packages() # popunite za pakete koje nemate, pazite navodnike!
 library(dplyr) # za manipulaciju tablicama
 library(ggplot2) # za crtanje grafova
 library(fitdistrplus) # za fit-atanje ditribucije
-library(pathcwork) # za prikaz više grafova
 
 # Postavljanje radnog direktorija
 getwd()
