@@ -158,3 +158,59 @@ t_test_cytokine <- t.test(cytokine_wide$"0_weeks", cytokine_wide$"2_weeks",
                           paired = TRUE)
 print(t_test_cytokine)
 
+### ANOVA - Analiza varijance - t-test za više grupa
+
+# Učitajmo novi dataset "fotosinteza.xlsx"
+library(readxl)   # For reading Excel files
+fotosinteza
+
+# Pogledajmo dataset!
+View()
+str()
+
+# Dataset: utjecaj toplinskog šoka na klijance Arabidopsis thaliana
+# grupa: wt_k - kontrola, wt_37 - klijanci s predtretmanom na 37C, wt_42 - klijanci bez toplinskog predtretmana
+# temp: temperatura tretmana klijanaca za vrijeme pokusa
+# aklimatizacija_37: DA, NE ili N/A
+# pi_Abs: prvi parametar za fotosintetsku učinkovitost
+# FvFm: drugi parametar za fotosintetsku učinkovitost
+# DREB2A: ekspresija gena DREB2A povezanog s toplinskom aklimatizacijom
+# HSFA3: ekspresija gena HSFA3 povezanog s toplinskom aklimatizacijom
+
+
+# Pretvorimo varijablu "grupa" u faktor"
+as.factor()
+
+# Vizualizirajmo odnos varijable "Pi_Abs" između grupa
+
+ggplot(fotosinteza, aes(x = grupa, y = Pi_Abs)) +
+  geom_boxplot() +
+  theme_minimal()
+
+# Isprobajte i ostale prikaza: boxplot i violin plot!
+
+ggplot(fotosinteza, aes(x = grupa, y = Pi_Abs)) +
+  geom_point() +
+  stat_summary(fun.data = 'mean_se', geom = 'errorbar', width = 0.2) +
+  stat_summary(fun.data = 'mean_se', geom = 'pointrange') +
+  theme_minimal()
+
+# Napravimo ANOVA analizu
+# Pitanje: postoji li razlika u srednjim vrijednostima fotosintetske aktivnosti
+# između grupa kontrole i različitih tretmana biljaka?
+aov(Pi_Abs ~ grupa, data = fotosinteza)
+
+# Spremite rezultate ANOVA teszta u objekt "anova_Pi_Abs"
+
+# Pregled rezultata ANOVA-e
+summary()
+
+# Post-hoc analiza ukoliko je ANOVA značajna
+
+# Tukey's Honest Significant Difference Test
+posthoc_Pi_Abs <- TukeyHSD(anova_Pi_Abs)
+print(posthoc_Pi_Abs)
+
+# Napravite ANOVA analizu za drugi paramatar fotosintetske učinkovitosti i ekspreije oba gena!
+
+
