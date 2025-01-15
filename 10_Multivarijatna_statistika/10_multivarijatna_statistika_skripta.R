@@ -27,7 +27,7 @@ View(iris)
 colnames(iris) <- c("SepalLength", "SepalWidth", "PetalLength", "PetalWidth", "Species")
 
 # 3. Korelacijske analize
-# naredba "cor_matrix"prikazuje Pearsonove koeficijente korelacije između numeričkih varijabli.
+# naredba "cor" prikazuje Pearsonove koeficijente korelacije između numeričkih varijabli.
 cor_matrix <- cor(iris %>% select(SepalLength:PetalWidth))
 print(cor_matrix)
 
@@ -99,6 +99,10 @@ plot(pca_res)
 autoplot(pca_res, data = iris, colour = 'Species',
          loadings = TRUE, loadings.label = TRUE, loadings.label.size = 3)
 
+# Zadatak:
+# odvojite dataset iris u 3 tablici, 1 za svaku vrstu i napravite PCA analizu za svaku vrstu irisa.
+# Kakav je izled PCA grafa u odnosu na cijeli dataset?
+
 
 # 6. Diskriminantna analiza (LDA)
 # LDA je metoda klasifikacije koja maksimizira razlike između grupa
@@ -130,6 +134,9 @@ ggplot(iris, aes(x = LDA1, y = LDA2, color = Species)) +
   labs(title = "LDA Scatterplot", x = "LDA1", y = "LDA2") +
   theme_minimal()
 
+# Zadatak:
+# Dodajte na graf "predviđene vrste" kao različite oblike točaka.
+
 # 7. K means clustering
 # skaliramo podatke (svedemo ih sve na prosjek = 0 i sd = 1)
 scaled_iris <- scale(iris[1:4],)
@@ -149,20 +156,23 @@ plot(1:k.max, wss,
      xlab="Broj clustera - K",
      ylab="Suma kvadrata unutar clustera")
 
-#"koljeno" je na 3 clustera
+# "koljeno" je na 3 clustera
 km<-kmeans(scaled_iris, centers=3, iter.max = 10, nstart = 1)
 km
 
-#pogledajmo koliko ima koje vrste u svakom clusteru
-dd <- cbind(iris, cluster = km$cluster)
-head(dd)
-tab <- table(clust = dd$cluster, true = dd$Species)
+# pogledajmo koliko ima koje vrste u svakom clusteru
+iris_km <- cbind(iris, cluster = km$cluster)
+head(iris_km)
+tab <- table(clust = iris_km$cluster, true = iris_km$Species)
 tab
 
-#grafički prikaz clustera (da bi to mogli, moramo koristiti PCA rezultat, ali bojamo po clusteru)
+# grafički prikaz clustera (da bi to mogli, moramo koristiti PCA rezultat, ali bojamo po clusteru)
 pca_res_km<-cbind(pca_res, cluster = km$cluster)
-autoplot(pca_res, data = dd, colour = 'cluster',
+autoplot(pca_res, data = iris_km, colour = 'cluster',
          loadings = TRUE, loadings.label = TRUE, loadings.label.size = 3)
+
+# Zadatak:
+# Prikažite k-means clustere na LDA grafu uz pomoć interneta (google, forumi, chatgpt).
 
 
 
